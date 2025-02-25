@@ -1,13 +1,12 @@
 ﻿using DatingApp.Data;
 using DatingApp.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DatingApp.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")] // it means api/Users
-    public class UsersController(DataContext dataContext) : ControllerBase
+    public class UsersController(DataContext dataContext) : BaseApiController
     {
 
         [HttpGet]
@@ -17,6 +16,7 @@ namespace DatingApp.Controllers
             return Ok(users);
         }
 
+        [Authorize]
         [HttpGet("{id:long}")] // api/users/1 el long es obligario
         public async Task<ActionResult<AppUser>> GetUser(long id)
         {
