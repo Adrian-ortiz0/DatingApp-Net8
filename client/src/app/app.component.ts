@@ -1,11 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, inject } from '@angular/core';
+import { NavComponent } from "./nav/nav.component";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   standalone: true,
-  styleUrls: ['./app.component.css'] 
+  styleUrls: ['./app.component.css'],
+  imports: [NavComponent] 
 })
 export class AppComponent implements OnInit {
   private http = inject(HttpClient);
