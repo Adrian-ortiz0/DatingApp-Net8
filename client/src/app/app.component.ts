@@ -2,13 +2,14 @@ import { Component, OnInit, inject } from '@angular/core';
 import { NavComponent } from "./nav/nav.component";
 import { AccountService } from './_services/account.service';
 import { HomeComponent } from "./home/home.component";
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   standalone: true,
   styleUrls: ['./app.component.css'],
-  imports: [NavComponent, HomeComponent] 
+  imports: [NavComponent, HomeComponent, RouterOutlet] 
 })
 export class AppComponent implements OnInit {
   private accountService = inject(AccountService);
