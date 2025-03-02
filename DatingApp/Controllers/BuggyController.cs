@@ -17,14 +17,15 @@ namespace DatingApp.Controllers
         [HttpGet("not-found")]
         public ActionResult<AppUser> GetNotFound()
         {
-            var thing = dataContext.Users.Find(-1);
+            var thing = dataContext.Users.FirstOrDefault(u => u.Id == -1);
 
             if(thing == null) {
                 return NotFound();
             }
 
-            return thing;
+            return Ok(thing);
         }
+        
         [HttpGet("server-error")]
         public ActionResult<AppUser> GetServerError()
         {
