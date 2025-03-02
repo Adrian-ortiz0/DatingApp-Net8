@@ -13,8 +13,7 @@ namespace DatingApp.Controllers
         {
             return "Secret text";
         }
-
-        [Authorize]
+        
         [HttpGet("not-found")]
         public ActionResult<AppUser> GetNotFound()
         {
@@ -26,8 +25,6 @@ namespace DatingApp.Controllers
 
             return thing;
         }
-
-        [Authorize]
         [HttpGet("server-error")]
         public ActionResult<AppUser> GetServerError()
         {
@@ -38,7 +35,6 @@ namespace DatingApp.Controllers
 
         }
 
-        [Authorize]
         [HttpGet("bad-request")]
         public ActionResult<string> GetBadRequest()
         {
