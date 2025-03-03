@@ -1,33 +1,36 @@
-﻿using DatingApp.Data;
+﻿using AutoMapper;
+using DatingApp.Data;
+using DatingApp.DTOs;
 using DatingApp.Entities;
+using DatingApp.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DatingApp.Controllers
 {
-    public class UsersController(DataContext dataContext) : BaseApiController
+    public class UsersController(IUserRepository userRepository) : BaseApiController
     {
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
         {
-            var users = await dataContext.Users.ToListAsync();
+            var users = await userRepository.GetMembersAsync();
             return Ok(users);
         }
 
         [Authorize]
-        [HttpGet("{id:long}")] // api/users/1 el long es obligario
-        public async Task<ActionResult<AppUser>> GetUser(long id)
+        [HttpGet("{name}")] 
+        public async Task<ActionResult<MemberDto>> GetUserByName(string name)
         {
-            var user = await dataContext.Users.FindAsync(id);
+            var user = await userRepository.GetMemberAsync(name);
 
             if(user == null)
             {
                 return NotFound();
             }
 
-            return Ok(user);
+            return user;
         }
 
     }

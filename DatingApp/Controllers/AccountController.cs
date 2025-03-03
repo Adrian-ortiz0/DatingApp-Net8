@@ -22,23 +22,24 @@ namespace DatingApp.Controllers
                 return BadRequest("The username is taken");
             }
 
-            using var hmac = new HMACSHA512();
-
-            var user = new AppUser
-            {
-                Name = registerDto.Name.ToLower(),
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-                PasswordSalt = hmac.Key
-            };
-
-            dataContext.Users.Add(user);
-            await dataContext.SaveChangesAsync();
-
-            return new UserDto
-            {
-                Username = user.Name,
-                Token = tokenService.CreateToken(user),
-            };
+            return Ok();
+            // using var hmac = new HMACSHA512();
+            //
+            // var user = new AppUser
+            // {
+            //     Name = registerDto.Name.ToLower(),
+            //     PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
+            //     PasswordSalt = hmac.Key
+            // };
+            //
+            // dataContext.Users.Add(user);
+            // await dataContext.SaveChangesAsync();
+            //
+            // return new UserDto
+            // {
+            //     Username = user.Name,
+            //     Token = tokenService.CreateToken(user),
+            // };
         }
         private async Task<bool> UserExists(String name)
         {
