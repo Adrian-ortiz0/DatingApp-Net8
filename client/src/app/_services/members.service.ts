@@ -13,7 +13,7 @@ export class MembersService {
   getMembers(){
     return this.http.get<Member[]>(this.baseUrl + "users");
   }
-  getMember(){
+  getMember(name: string){
     return this.http.get<Member>(this.baseUrl + "users/" + name);
   }
 
