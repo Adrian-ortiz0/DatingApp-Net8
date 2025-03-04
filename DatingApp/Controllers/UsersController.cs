@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DatingApp.Controllers
 {
+    [Authorize]
     public class UsersController(IUserRepository userRepository) : BaseApiController
     {
 
@@ -19,7 +20,6 @@ namespace DatingApp.Controllers
             return Ok(users);
         }
 
-        [Authorize]
         [HttpGet("{name}")] 
         public async Task<ActionResult<MemberDto>> GetUserByName(string name)
         {
