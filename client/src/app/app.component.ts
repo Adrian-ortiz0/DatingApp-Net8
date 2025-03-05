@@ -3,13 +3,14 @@ import { NavComponent } from "./nav/nav.component";
 import { AccountService } from './_services/account.service';
 import { HomeComponent } from "./home/home.component";
 import { RouterOutlet } from '@angular/router';
+import { NgxSpinnerComponent } from 'ngx-spinner';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   standalone: true,
   styleUrls: ['./app.component.css'],
-  imports: [NavComponent, HomeComponent, RouterOutlet] 
+  imports: [NavComponent, HomeComponent, RouterOutlet, NgxSpinnerComponent] 
 })
 export class AppComponent implements OnInit {
   private accountService = inject(AccountService);
