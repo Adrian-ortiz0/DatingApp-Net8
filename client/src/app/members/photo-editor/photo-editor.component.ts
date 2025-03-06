@@ -1,13 +1,13 @@
 import { Component, inject, input, OnInit, output } from '@angular/core';
 import { Member } from '../../_models/member';
-import { NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
+import { DecimalPipe, NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
 import { FileUploader, FileUploadModule } from 'ng2-file-upload';
 import { AccountService } from '../../_services/account.service';
 import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-photo-editor',
   standalone: true,
-  imports: [NgIf, NgFor, NgClass, NgStyle, FileUploadModule],
+  imports: [NgIf, NgFor, NgClass, NgStyle, FileUploadModule, DecimalPipe],
   templateUrl: './photo-editor.component.html',
   styleUrl: './photo-editor.component.css'
 })
