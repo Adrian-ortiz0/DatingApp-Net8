@@ -8,10 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
 using System.Text;
+using DatingApp.Extensions;
 
 namespace DatingApp.Controllers
 {
-    public class AccountController(DataContext dataContext, ITokenService tokenService) : BaseApiController
+    public class AccountController(DataContext dataContext, ITokenService tokenService, UserRepository userRepository) : BaseApiController
     {
         [AllowAnonymous]
         [HttpPost("register")] // account/register
@@ -78,5 +79,7 @@ namespace DatingApp.Controllers
             };
 
         }
+
+        
     }
 }
