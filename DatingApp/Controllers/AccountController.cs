@@ -8,11 +8,13 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
 using System.Text;
+using AutoMapper;
 using DatingApp.Extensions;
 
 namespace DatingApp.Controllers
 {
-    public class AccountController(DataContext dataContext, ITokenService tokenService, UserRepository userRepository) : BaseApiController
+    public class AccountController(DataContext dataContext, ITokenService tokenService, 
+        IMapper mapper) : BaseApiController
     {
         [AllowAnonymous]
         [HttpPost("register")] // account/register
@@ -23,24 +25,23 @@ namespace DatingApp.Controllers
                 return BadRequest("The username is taken");
             }
 
-            return Ok();
-            // using var hmac = new HMACSHA512();
-            //
-            // var user = new AppUser
-            // {
-            //     Name = registerDto.Name.ToLower(),
-            //     PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-            //     PasswordSalt = hmac.Key
-            // };
-            //
-            // dataContext.Users.Add(user);
-            // await dataContext.SaveChangesAsync();
-            //
-            // return new UserDto
-            // {
-            //     Username = user.Name,
-            //     Token = tokenService.CreateToken(user),
-            // };
+            using var hmac = new HMACSHA512();
+
+            var user = mapper.Map<AppUser>(registerDto);
+            
+            user.Name = registerDto.Name.ToLower();
+            user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password));
+            user.PasswordSalt = hmac.Key;
+            
+            dataContext.Users.Add(user);
+            await dataContext.SaveChangesAsync();
+            
+            return new UserDto
+            {
+                Username = user.Name,
+                Token = tokenService.CreateToken(user),
+                KnownAs = user.KnownAs
+            };
         }
         private async Task<bool> UserExists(String name)
         {
@@ -73,7 +74,8 @@ namespace DatingApp.Controllers
             }
             return new UserDto
             {
-                Username = loginDto.Name,
+                Username = user.Name,
+                KnownAs = user.KnownAs,
                 Token = tokenService.CreateToken(user),
                 PhotoUrl  = user.Photos.FirstOrDefault(x => x.IsMain)?.Url
             };
