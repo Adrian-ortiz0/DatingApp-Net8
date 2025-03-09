@@ -1,5 +1,5 @@
 import { Component, inject, input, OnInit, output } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { AccountService } from '../_services/account.service';
 import { ToastrService } from 'ngx-toastr';
 import { JsonPipe, NgIf } from '@angular/common';
@@ -15,6 +15,7 @@ import { TextInputComponent } from "../_forms/text-input/text-input.component";
 export class RegisterComponent implements OnInit {
   model: any = {};
   private accountService = inject(AccountService);
+  private fb = inject(FormBuilder);
   usersFromHomeComponent = input.required<any>(); 
   cancelRegister = output<boolean>();
   private toastr = inject(ToastrService);
@@ -26,10 +27,15 @@ export class RegisterComponent implements OnInit {
   }
 
   initializeForm(){
-    this.registerForm = new FormGroup({
-      name: new FormControl('', Validators.required),
-      password: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]),
-      confirmPassword: new FormControl('', [Validators.required, this.matchValues('password')])
+    this.registerForm = this.fb.group({
+      gender: ['male'],
+      name: ['', Validators.required],
+      knownAs: ['', Validators.required],
+      dateOfBirth: ['', Validators.required],
+      city: ['', Validators.required],
+      country: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]],
+      confirmPassword: ['', [Validators.required, this.matchValues('password')]]
     });
     this.registerForm.controls['password'].valueChanges.subscribe({
       next: () => this.registerForm.controls["confirmPassword"].updateValueAndValidity()
