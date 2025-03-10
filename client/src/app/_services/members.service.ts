@@ -4,7 +4,7 @@ import { environment } from '../../environments/environment';
 import { Member } from '../_models/member';
 import { of, tap } from 'rxjs';
 import { Photo } from '../_models/photo';
-import { PaginationResult } from '../_models/pagination';
+import { PaginatedResult } from '../_models/pagination';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class MembersService {
   private http = inject(HttpClient);
   baseUrl = environment.apiUrl;
   members = signal<Member[]>([]);
-  paginatedResult = signal<PaginationResult<Member[]> | null>(null)
+  paginatedResult = signal<PaginatedResult<Member[]> | null>(null)
   
   getMembers(pageNumber?: number, pageSize?: number){
     let params = new HttpParams();
