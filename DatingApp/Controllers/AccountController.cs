@@ -40,7 +40,8 @@ namespace DatingApp.Controllers
             {
                 Username = user.Name,
                 Token = tokenService.CreateToken(user),
-                KnownAs = user.KnownAs
+                KnownAs = user.KnownAs,
+                Gender = user.Gender
             };
         }
         private async Task<bool> UserExists(String name)
@@ -77,7 +78,9 @@ namespace DatingApp.Controllers
                 Username = user.Name,
                 KnownAs = user.KnownAs,
                 Token = tokenService.CreateToken(user),
+                Gender = user.Gender,
                 PhotoUrl  = user.Photos.FirstOrDefault(x => x.IsMain)?.Url
+                
             };
 
         }
