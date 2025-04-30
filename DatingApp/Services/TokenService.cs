@@ -20,7 +20,8 @@ namespace DatingApp.Services
 
             var claims = new List<Claim>
             {
-                new(ClaimTypes.NameIdentifier, appUser.Name)
+                new(ClaimTypes.NameIdentifier, appUser.Id.ToString()),
+                new(ClaimTypes.Name, appUser.Name)
             };
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
